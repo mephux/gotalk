@@ -565,7 +565,7 @@ function openWebSocket(s, addr, callback) {
 if (global.gotalkResponderAt !== undefined) {
   var at = global.gotalkResponderAt;
   if (at && at.ws) {
-    gotalk.defaultResponderAddress = 'ws://' + document.location.host + at.ws;
+    gotalk.defaultResponderAddress = 'wss://' + document.location.host + at.ws;
   }
   delete global.gotalkResponderAt;
 }
