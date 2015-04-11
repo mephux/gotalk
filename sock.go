@@ -90,9 +90,9 @@ func Pipe(handlers *Handlers, limits Limits) (*Sock, *Sock, error) {
 
 // Connect to a server via `how` at `addr`. Unless there's an error, the returned socket is
 // already reading in a different goroutine and is ready to be used.
-func Connect(how, addr string) (*Sock, error) {
+func Connect(how, addr string, config *tls.Config) (*Sock, error) {
 	s := NewSock(DefaultHandlers)
-	return s, s.Connect(how, addr, DefaultLimits)
+	return s, s.Connect(how, addr, config, DefaultLimits)
 }
 
 // Adopt an I/O stream, which should already be in a "connected" state.
@@ -106,8 +106,8 @@ func (s *Sock) Adopt(c io.ReadWriteCloser) {
 // ----------------------------------------------------------------------------------------------
 
 // Connect to a server via `how` at `addr`
-func (s *Sock) Connect(how, addr string, limits Limits) error {
-	c, err := tls.Dial(how, addr, nil)
+func (s *Sock) Connect(how, addr string, config *tls.Config, limits Limits) error {
+	c, err := tls.Dial(how, addr, config)
 	if err != nil {
 		return err
 	}

@@ -57,8 +57,10 @@ func (ln tcpKeepAliveListener) Accept() (c net.Conn, err error) {
 // returned socket to start accepting connections. `how` and `addr` are passed to `net.Listen()`
 // and thus any values accepted by net.Listen are valid.
 // The returned server has Handlers=DefaultHandlers and Limits=DefaultLimits set.
-func Listen(how, addr string) (*Server, error) {
-	l, err := tls.Listen(how, addr, nil)
+func Listen(how, addr string, config *tls.Config) (*Server, error) {
+
+	l, err := tls.Listen(how, addr, config)
+
 	if err != nil {
 		return nil, err
 	}
@@ -88,8 +90,8 @@ func Listen(how, addr string) (*Server, error) {
 }
 
 // Start a `how` server accepting connections at `addr`
-func Serve(how, addr string, acceptHandler SockHandler) error {
-	s, err := Listen(how, addr)
+func Serve(how, addr string, config *tls.Config, acceptHandler SockHandler) error {
+	s, err := Listen(how, addr, config)
 	if err != nil {
 		return err
 	}
