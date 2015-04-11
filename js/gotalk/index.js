@@ -585,11 +585,8 @@ Sock.prototype.open = function(addr, callback) {
     addr = gotalk.defaultResponderAddress;
   }
 
-  if (addr.substr(0,3) === 'ws:') {
-    openWebSocket(s, addr, callback);
-  } else {
-    throw new Error('unsupported address');
-  }
+  openWebSocket(s, 'wss://' + document.location.host + at.ws, callback);
+
   return s;
 };
 

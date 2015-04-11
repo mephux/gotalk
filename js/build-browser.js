@@ -73,6 +73,7 @@ function buildAll() {
     cwd: __dirname
   });
   if (p.error) {
+    console.log(p.error)
     throw p.error;
   }
 
